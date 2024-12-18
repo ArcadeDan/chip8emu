@@ -4,10 +4,18 @@ use std::default;
 use crate::memory::memory::{Byte, Memory, Word};
 use twelve_bit::u12;
 
+pub const SCREEN_WIDTH: usize = 64;
+pub const SCREEN_HEIGHT: usize = 32;
+
+const START_ADDRESS: Word = 0x200;
+
+
 
 #[allow(non_snake_case)]
 pub struct Chip8CPU {
 
+    // Screen
+    Screen: [bool; SCREEN_WIDTH * SCREEN_HEIGHT],
     // Memory
     RAM: Memory,
 
@@ -34,6 +42,7 @@ pub struct Chip8CPU {
     AddressRegister: u12::U12,
     I: Word,
     Stack: Word,
+    PC: Word,
 
 }
 
@@ -59,8 +68,9 @@ impl Default for Chip8CPU {
             VF: 0x00,
             AddressRegister: 0x00.into(),
             I: 0x00,
-
             Stack: 0x00,
+            PC: START_ADDRESS,
+            Screen: [false; SCREEN_WIDTH * SCREEN_HEIGHT],
         }
     }
 }
